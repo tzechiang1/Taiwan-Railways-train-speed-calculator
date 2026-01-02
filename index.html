@@ -5,26 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台鐵列車通過速度計算器</title>
     <style>
-        body { font-family: sans-serif; background-color: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 15px; min-height: 100vh; margin: 0; position: relative; }
-        .card { background-color: #2d2d2d; border-radius: 20px; padding: 25px; width: 100%; max-width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; margin-top: 20px; z-index: 1; }
+        /* 統一背景顏色，並確保內容垂直置中 */
+        body { 
+            font-family: sans-serif; 
+            background-color: #2d2d2d; 
+            color: #fff; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; /* 讓卡片在垂直方向也置中 */
+            min-height: 100vh; 
+            margin: 0; 
+            position: relative; 
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        .card { 
+            background-color: #333; /* 稍微與底色區隔的深灰，增加層次感 */
+            border-radius: 20px; 
+            padding: 25px; 
+            width: 100%; 
+            max-width: 450px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            text-align: center; 
+            margin-bottom: 80px; /* 為下方的設計者資訊留出空間 */
+        }
+        
         h2 { color: #f39c12; margin-top: 0; font-size: 1.6em; margin-bottom: 25px; }
         .input-group { text-align: left; margin-bottom: 25px; }
         label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.95em; }
-        select, input { width: 100%; padding: 15px; font-size: 1.1em; border-radius: 12px; border: 2px solid #444; background: #333; color: white; box-sizing: border-box; outline: none; }
+        
+        select, input { 
+            width: 100%; 
+            padding: 15px; 
+            font-size: 1.1em; 
+            border-radius: 12px; 
+            border: 2px solid #444; 
+            background: #222; 
+            color: white; 
+            box-sizing: border-box; 
+            outline: none; 
+        }
         select:focus, input:focus { border-color: #f39c12; }
+        
         #result { font-size: 4.5em; font-weight: bold; color: #2ecc71; margin: 20px 0; }
         .unit { font-size: 0.35em; margin-left: 8px; color: #888; }
         
-        /* 左下方設計者資訊 */
-        .credits {
-            position: absolute;
-            left: 15px;
-            bottom: 15px;
-            text-align: left;
-            font-size: 0.75em;
-            color: #888;
-            line-height: 1.6;
-            z-index: 0;
+        /* 調整設計者資訊樣式 */
+        .credits { 
+            position: absolute; 
+            left: 0;
+            right: 0;
+            bottom: 35px; /* 從最底部移上來一點 */
+            text-align: center; /* 改為置中，在大螢幕或橫向顯示時更好看 */
+            font-size: 0.85em; /* 稍微放大的小白字 */
+            color: #aaa; /* 比原本再亮一點點，更易閱讀 */
+            line-height: 1.6; 
+            z-index: 0; 
         }
     </style>
 </head>
@@ -80,10 +118,8 @@
             if (sec > 0) {
                 const speed = (length / sec) * 3.6;
                 resDiv.innerHTML = speed.toFixed(2) + '<span class="unit">km/h</span>';
-                resDiv.style.color = '#2ecc71';
             } else {
                 resDiv.innerHTML = '0.00<span class="unit">km/h</span>';
-                resDiv.style.color = '#2ecc71';
             }
         }
     </script>

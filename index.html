@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台鐵列車通過速度計算器</title>
+    <title>台鐵列車通過時速計算器 v1.2</title>
     <style>
-        /* 統一背景顏色，並確保內容垂直置中 */
+        /* 1. 底色統一與平面化配置 */
         body { 
             font-family: sans-serif; 
             background-color: #2d2d2d; 
@@ -13,29 +13,25 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: center; /* 讓卡片在垂直方向也置中 */
             min-height: 100vh; 
             margin: 0; 
-            position: relative; 
-            padding: 15px;
+            padding: 40px 20px;
             box-sizing: border-box;
         }
-        
-        .card { 
-            background-color: #333; /* 稍微與底色區隔的深灰，增加層次感 */
-            border-radius: 20px; 
-            padding: 25px; 
+
+        .container { 
             width: 100%; 
             max-width: 450px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             text-align: center; 
-            margin-bottom: 80px; /* 為下方的設計者資訊留出空間 */
         }
-        
-        h2 { color: #f39c12; margin-top: 0; font-size: 1.6em; margin-bottom: 25px; }
-        .input-group { text-align: left; margin-bottom: 25px; }
-        label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.95em; }
-        
+
+        /* 偏黃色標題 */
+        h2 { color: #FFC107; margin: 0; font-size: 1.8em; }
+        .version-tag { color: #fff; font-size: 0.9em; margin: 10px 0 30px 0; font-weight: normal; }
+
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9em; }
+
         select, input { 
             width: 100%; 
             padding: 15px; 
@@ -47,34 +43,44 @@
             box-sizing: border-box; 
             outline: none; 
         }
-        select:focus, input:focus { border-color: #f39c12; }
-        
-        #result { font-size: 4.5em; font-weight: bold; color: #2ecc71; margin: 20px 0; }
+
+        #result { font-size: 4.5em; font-weight: bold; color: #2ecc71; margin: 30px 0; }
         .unit { font-size: 0.35em; margin-left: 8px; color: #888; }
-        
-        /* 調整設計者資訊樣式 */
+
+        /* 3. 置中的設計者資訊與小字、靠左的版本記錄 */
+        .footer { 
+            margin-top: auto; 
+            padding-top: 40px;
+            width: 100%;
+            max-width: 450px;
+        }
+
         .credits { 
-            position: absolute; 
-            left: 0;
-            right: 0;
-            bottom: 35px; /* 從最底部移上來一點 */
-            text-align: center; /* 改為置中，在大螢幕或橫向顯示時更好看 */
-            font-size: 0.85em; /* 稍微放大的小白字 */
-            color: #aaa; /* 比原本再亮一點點，更易閱讀 */
-            line-height: 1.6; 
-            z-index: 0; 
+            text-align: center; 
+            font-size: 0.9em; 
+            color: #bbb; 
+            line-height: 1.8; 
+            margin-bottom: 30px;
+        }
+
+        .changelog { 
+            text-align: left; 
+            font-size: 0.75em; 
+            color: #888; 
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>台鐵列車通過速度計算器</h2>
+    <div class="container">
+        <h2>台鐵列車通過時速計算器</h2>
+        <div class="version-tag">v1.2版 2026/1/20更新</div>
         
         <div class="input-group">
             <label>選擇列車編組（其餘車種陸續開發中）</label>
             <select id="trainType" onchange="calculate()">
-                <optgroup label="電聯車 (EMU/TEMU)">
+                <optgroup label="電聯車">
                     <option value="162.6">EMU500/600 (8輛)</option>
                     <option value="81.3">EMU500/600 (4輛)</option>
                     <option value="163.2">EMU700</option>
@@ -84,11 +90,11 @@
                     <option value="168.3">TEMU1000 太魯閣</option>
                     <option value="168.3">TEMU2000 普悠瑪</option>
                 </optgroup>
-                <optgroup label="柴聯自強號 (DR)">
+                <optgroup label="柴聯自強號">
                     <option value="182.4">柴聯自強 (9輛編成)</option>
                     <option value="243.2">柴聯自強 (12輛編成)</option>
                 </optgroup>
-                <optgroup label="推拉式自強號 (PP)">
+                <optgroup label="推拉式自強號">
                     <option value="278.02" selected>E1000 PP自強 (12節)</option>
                     <option value="281.5">E500 PP自強 (12節)</option>
                 </optgroup>
@@ -103,9 +109,17 @@
         <div id="result">0.00<span class="unit">km/h</span></div>
     </div>
 
-    <div class="credits">
-        設計者：台鐵平常-tze.chiang<br>
-        如有問題請至本人ig或youtube留言告知。
+    <div class="footer">
+        <div class="credits">
+            設計者：台鐵平常-tze.chiang<br>
+            如有問題請至本人ig或youtube留言告知。
+        </div>
+
+        <div class="changelog">
+            版本記錄：<br>
+            2026/1/3 測試1.0版創立<br>
+            2026/1/20 1.2版上線，微調介面、新增版本記錄欄
+        </div>
     </div>
 
     <script>

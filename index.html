@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台鐵列車通過時速計算器 v1.2</title>
+    <title>台鐵列車通過時速計算器 v2.0</title>
     <style>
         /* 1. 底色統一與平面化配置 */
         body { 
@@ -44,13 +44,22 @@
             outline: none; 
         }
 
-        #result { font-size: 4.5em; font-weight: bold; color: #2ecc71; margin: 30px 0; }
+        #result { font-size: 4.5em; font-weight: bold; color: #2ecc71; margin-top: 30px; margin-bottom: 5px; }
         .unit { font-size: 0.35em; margin-left: 8px; color: #888; }
+
+        /* 計算式小字的樣式 */
+        #formula-display {
+            font-size: 0.85em;
+            color: #eee;
+            font-style: italic;
+            margin-bottom: 30px;
+            min-height: 1.2em;
+        }
 
         /* 3. 置中的設計者資訊與小字、靠左的版本記錄 */
         .footer { 
             margin-top: auto; 
-            padding-top: 40px;
+            padding-top: 80px; 
             width: 100%;
             max-width: 450px;
         }
@@ -75,7 +84,7 @@
 
     <div class="container">
         <h2>台鐵列車通過時速計算器</h2>
-        <div class="version-tag">v1.2版 2026/1/20更新</div>
+        <div class="version-tag">v2.0版 2026/5/1 更新</div>
         
         <div class="input-group">
             <label>選擇列車編組（其餘車種陸續開發中）</label>
@@ -91,12 +100,19 @@
                     <option value="168.3">TEMU2000 普悠瑪</option>
                 </optgroup>
                 <optgroup label="柴聯自強號">
+                    <option value="121.6">柴聯自強 (6輛編成)</option>
                     <option value="182.4">柴聯自強 (9輛編成)</option>
                     <option value="243.2">柴聯自強 (12輛編成)</option>
                 </optgroup>
                 <optgroup label="推拉式自強號">
                     <option value="278.02" selected>E1000 PP自強 (12節)</option>
                     <option value="281.5">E500 PP自強 (12節)</option>
+                </optgroup>
+                <optgroup label="E500 客車編組">
+                    <option value="180.77">E500 + 8客車</option>
+                    <option value="200.77">E500 + 9客車</option>
+                    <option value="220.77">E500 + 10客車</option>
+                    <option value="240.77">E500 + 11客車</option>
                 </optgroup>
             </select>
         </div>
@@ -107,6 +123,7 @@
         </div>
         
         <div id="result">0.00<span class="unit">km/h</span></div>
+        <div id="formula-display">計算式：載入中...</div>
     </div>
 
     <div class="footer">
@@ -118,7 +135,8 @@
         <div class="changelog">
             版本記錄：<br>
             2026/1/3 測試1.0版創立<br>
-            2026/1/20 1.2版上線，微調介面、新增版本記錄欄
+            2026/1/20 1.2版上線，微調介面、新增版本記錄欄<br>
+            2026/5/1 2.0版上線：新增計算式顯示、新增柴聯自強2組數據、新增E500客車編組數據
         </div>
     </div>
 
@@ -126,8 +144,11 @@
         function calculate() {
             const trainSelect = document.getElementById('trainType');
             const length = parseFloat(trainSelect.value);
-            const sec = document.getElementById('seconds').value;
+            const secInput = document.getElementById('seconds').value;
             const resDiv = document.getElementById('result');
+            const formulaDiv = document.getElementById('formula-display');
+
+            const sec = secInput > 0 ? parseFloat(secInput) : 0;
 
             if (sec > 0) {
                 const speed = (length / sec) * 3.6;
@@ -135,7 +156,12 @@
             } else {
                 resDiv.innerHTML = '0.00<span class="unit">km/h</span>';
             }
+
+            const displaySec = sec > 0 ? sec : "0.00";
+            formulaDiv.innerHTML = `計算式：${length}m ÷ ${displaySec}sec × 3.6`;
         }
+        
+        window.onload = calculate;
     </script>
 </body>
 </html>
